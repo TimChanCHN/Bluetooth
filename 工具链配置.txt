@@ -1,0 +1,42 @@
+1. 准备材料：
+    cmake(选择bin文件，下载路径：https://cmake.org/download/)  
+    ninja-win ：一个构建系统工具
+
+2. cmake:
+    解压缩，并把里面所有内容存放到git安装目录下的mingw64下（D:\Git\Git\mingw64）
+
+3. ninja-win
+    解压缩，并放到window下一个非中文路径下，并添加到windows的环境变量中（E:\bluetooth\toolchain\ninja-win）
+
+4. vscode 终端添加git bash
+    1. ctrl+shift+p --> open setting(json)
+    2. 添加语句："terminal.integrated.shell.windows": "D:\\Git\\Git\\bin\\bash.exe"
+    3. 重启vscode，选择Terminal-->new terminal(ctrl+shift+`)
+    4. 键入cmake\ninja, 只要不出现找不到该命令，则认为以上环境配置成功
+
+5. 配置编译器
+    1. 进入路径：<项目名称>/cmake/toolchain/armcc.cmake
+    2. 把第2行的路径改为keil的ARMCC路径（D:/WorkSoftware/keil/ARM/ARMCC/bin）
+    3. 在~/.bashrc中增加命令
+        alias cmaken='cmake -DTOOLCHAIN=armcc -GNinja'
+    4. source ~/.bashrc
+    5. 重启终端
+
+6. 编译
+    1. 进入对应的项目文件中，把build文件中的全部内容清楚
+        rm -rf *
+    2. cmaken ..
+    3. ninja
+    4. build/src/xxx.hex文件即是最终文件
+
+7. 烧录
+    1. 安装nrfjprog压缩包
+        备注：由于已经安装了J-Link驱动，因此可以不安装J-Link驱动
+        把安装的路径添加到环境变量中（C:\Program Files\Nordic Semiconductor\nrf-command-line-tools\bin)
+
+    2. nrfjprog命令：APP和协议栈分开烧录
+        1. 烧APP的命令
+            nrfjprog  -f  NRF52  --program  template_nrf52810_xxAA_s112_7.0.1_merged.hex   --sectorerase   --reset
+        2. 烧协议栈命令
+
+    3. mergehex命令：该命令把APP和协议栈生成到一个.hex中再烧录
