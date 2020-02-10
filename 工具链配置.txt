@@ -39,4 +39,4 @@
             nrfjprog  -f  NRF52  --program  template_nrf52810_xxAA_s112_7.0.1_merged.hex   --sectorerase   --reset
         2. 烧协议栈命令
 
-    3. mergehex命令：该命令把APP和协议栈生成到一个.hex中再烧录
+    3. mergehex命令：该命令把APP和协议栈生成到一个.hex中再烧录  
